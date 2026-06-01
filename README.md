@@ -34,6 +34,35 @@ Install BlackHole 2ch separately and make sure it appears as an audio input devi
 python main.py
 ```
 
+## Hybrid Local Automation
+
+Start the local worker:
+
+```bash
+./scripts/run_local_worker.sh
+```
+
+Start n8n with Docker/Colima:
+
+```bash
+./scripts/run_n8n.sh
+```
+
+Import this workflow in n8n:
+
+```text
+n8n/workflows/discovery_agent_hybrid_workflow.json
+```
+
+Create the macOS Dock launcher:
+
+```bash
+./scripts/create_dock_launcher.sh
+open "$HOME/Applications/Discovery Agent Launcher.app"
+```
+
+Note: with Colima, Docker containers may not be able to call a macOS host service on `localhost:8765` without extra networking/tunnel setup. The local worker endpoint itself is functional at `http://localhost:8765`. For a fully reliable hybrid setup, run n8n on the host machine, use n8n Cloud with a tunnel to the worker, or expose the worker through a local tunnel.
+
 The default pipeline uses deterministic local Python classes so you can test the project before every API is configured. `_agent/agents/crew.py` provides the CrewAI orchestration layer for production-style coordination with the configured model.
 
 CrewAI runs when `ENABLE_CREWAI=true` is present in `.env`. It runs after a transcript is available and before PDF/Markdown generation. If CrewAI fails because of a dependency, model name, or provider issue, the deterministic pipeline continues and prints a warning.

@@ -10,3 +10,6 @@ rich
 pypdf
 python-dotenv
 gitpython
+fastapi
+uvicorn
+requests

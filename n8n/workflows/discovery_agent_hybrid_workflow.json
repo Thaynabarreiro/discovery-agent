@@ -1,0 +1,105 @@
+{
+  "id": "discovery-agent-hybrid-control",
+  "name": "Discovery Agent Hybrid Control",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "discovery-agent/start",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "start-webhook",
+      "name": "Start Discovery Call Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 220],
+      "webhookId": "discovery-agent-start"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:8765/start-call",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.body || $json }}",
+        "options": {}
+      },
+      "id": "start-local-worker",
+      "name": "Start Local Worker",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [520, 220]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}"
+      },
+      "id": "start-response",
+      "name": "Return Start Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [800, 220]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "discovery-agent/stop",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "stop-webhook",
+      "name": "Stop Discovery Call Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 520],
+      "webhookId": "discovery-agent-stop"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:8765/stop-call",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.body || $json }}",
+        "options": {}
+      },
+      "id": "stop-local-worker",
+      "name": "Stop Local Worker + Generate Outputs",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [520, 520]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}"
+      },
+      "id": "stop-response",
+      "name": "Return Output Links",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [800, 520]
+    }
+  ],
+  "connections": {
+    "Start Discovery Call Webhook": {
+      "main": [[{"node": "Start Local Worker", "type": "main", "index": 0}]]
+    },
+    "Start Local Worker": {
+      "main": [[]]
+    },
+    "Stop Discovery Call Webhook": {
+      "main": [[{"node": "Stop Local Worker + Generate Outputs", "type": "main", "index": 0}]]
+    },
+    "Stop Local Worker + Generate Outputs": {
+      "main": [[]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
