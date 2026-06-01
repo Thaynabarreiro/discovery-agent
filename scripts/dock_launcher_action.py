@@ -2,13 +2,15 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import urllib.error
 import urllib.request
 from pathlib import Path
 
 
-START_URL = "http://localhost:5678/webhook/discovery-agent/start"
-STOP_URL = "http://localhost:5678/webhook/discovery-agent/stop"
+N8N_BASE_URL = os.getenv("DISCOVERY_AGENT_N8N_BASE_URL", "https://n8n.moveai.pro")
+START_URL = f"{N8N_BASE_URL.rstrip('/')}/webhook/discovery-agent/start"
+STOP_URL = f"{N8N_BASE_URL.rstrip('/')}/webhook/discovery-agent/stop"
 
 
 def main() -> None:

@@ -19,7 +19,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "http://host.docker.internal:8765/start-call",
+        "url": "https://discovery-agent-worker.moveai.pro/start-call",
         "sendBody": true,
         "contentType": "json",
         "specifyBody": "json",
@@ -60,7 +60,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "http://host.docker.internal:8765/stop-call",
+        "url": "https://discovery-agent-worker.moveai.pro/stop-call",
         "sendBody": true,
         "contentType": "json",
         "specifyBody": "json",

@@ -10,6 +10,7 @@ services:
       - N8N_PROTOCOL=http
       - WEBHOOK_URL=http://localhost:5678/
       - GENERIC_TIMEZONE=Europe/Paris
+      - LOCAL_WORKER_PUBLIC_URL=${LOCAL_WORKER_PUBLIC_URL:-http://host.docker.internal:8765}
     volumes:
       - ./n8n_data:/home/node/.n8n
     extra_hosts:
