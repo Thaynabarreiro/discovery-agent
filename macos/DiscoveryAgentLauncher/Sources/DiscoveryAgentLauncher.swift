@@ -552,9 +552,9 @@ private func switchToBlackHole() throws {
     }
     let devices = try runShell("SwitchAudioSource -t input -a")
     if devices.components(separatedBy: .newlines).contains("BlackHole 2ch") {
-        _ = try runShell("SwitchAudioSource -t input -n 'BlackHole 2ch'")
+        _ = try runShell("SwitchAudioSource -t input -s 'BlackHole 2ch'")
     } else if devices.components(separatedBy: .newlines).contains("BlackHole 16ch") {
-        _ = try runShell("SwitchAudioSource -t input -n 'BlackHole 16ch'")
+        _ = try runShell("SwitchAudioSource -t input -u 'BlackHole16ch_UID'")
     } else {
         throw LauncherError.message("BlackHole is not available as an input device. Install BlackHole or choose 'Using headphones' off.")
     }
@@ -565,7 +565,7 @@ private func restoreOriginalInputDevice() throws -> String {
         return ""
     }
     let escaped = original.replacingOccurrences(of: "'", with: "'\\''")
-    let output = try runShell("SwitchAudioSource -t input -n '\(escaped)'")
+    let output = try runShell("SwitchAudioSource -t input -s '\(escaped)'")
     UserDefaults.standard.removeObject(forKey: "DiscoveryAgentOriginalInputDevice")
     return output
 }

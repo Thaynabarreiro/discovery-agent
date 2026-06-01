@@ -135,9 +135,15 @@ def _switch_to_blackhole() -> None:
     if not shutil.which("SwitchAudioSource"):
         console.print("[yellow]switchaudio-osx not installed. Run: brew install switchaudio-osx[/yellow]")
         return
-    subprocess.run(["SwitchAudioSource", "-t", "input", "-n", "BlackHole 2ch"], check=False)
+    devices = subprocess.run(["SwitchAudioSource", "-t", "input", "-a"], capture_output=True, text=True).stdout.splitlines()
+    if "BlackHole 2ch" in devices:
+        subprocess.run(["SwitchAudioSource", "-t", "input", "-s", "BlackHole 2ch"], check=False)
+    elif "BlackHole 16ch" in devices:
+        subprocess.run(["SwitchAudioSource", "-t", "input", "-u", "BlackHole16ch_UID"], check=False)
+    else:
+        console.print("[yellow]BlackHole input device not found. Install BlackHole or use the current microphone input.[/yellow]")
 
 
 def _restore_input_device(device: str) -> None:
     if shutil.which("SwitchAudioSource"):
-        subprocess.run(["SwitchAudioSource", "-t", "input", "-n", device], check=False)
+        subprocess.run(["SwitchAudioSource", "-t", "input", "-s", device], check=False)

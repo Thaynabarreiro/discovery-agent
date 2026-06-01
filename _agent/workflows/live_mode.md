@@ -39,7 +39,7 @@ Before capture, show a tkinter choice window:
 For Discovery Call or Entrevista:
 
 1. Save the current macOS input device.
-2. Switch input to `BlackHole 2ch` using `switchaudio-osx -t input -n "BlackHole 2ch"`.
+2. Switch input to BlackHole using `SwitchAudioSource -t input -s "BlackHole 2ch"` when available, or `SwitchAudioSource -t input -u "BlackHole16ch_UID"` for BlackHole 16ch.
 3. If `switchaudio-osx` is unavailable, show `brew install switchaudio-osx`.
 4. Restore the original device after `CTRL+C`.
 
