@@ -4,14 +4,17 @@
 
 ```mermaid
 flowchart LR
-  A["1. Click Dock App"] --> B["2. n8n receives webhook"]
-  B --> C["3. Local Mac worker starts call capture"]
-  C --> D["4. Audio chunks are transcribed"]
-  D --> E["5. Transcript is finalized"]
-  E --> F["6. CrewAI agents analyze the case"]
-  F --> G["7. RAG retrieves similar cases"]
-  G --> H["8. Local generator creates outputs"]
-  H --> I["9. n8n stores/sends links"]
+  A["1. Discovery Agent Launcher"] --> B["2. n8n receives webhook"]
+  B --> C["3. Cloudflare Tunnel routes to Mac"]
+  C --> D["4. Local FastAPI worker"]
+  D --> E{"5. Input mode"}
+  E --> F["Live: BlackHole/sounddevice/Whisper"]
+  E --> G["Transcript: file or pasted text"]
+  F --> H["6. CrewAI crew runs agents"]
+  G --> H
+  H --> I["7. RAG searches ChromaDB"]
+  I --> J["8. Agents produce scope and content"]
+  J --> K["9. PDF, engineering spec, PM review"]
 ```
 
 ## Agentic Framework Vocabulary
@@ -29,9 +32,22 @@ flowchart LR
 | Agent | Role-based reasoning unit | A specialized role such as IntakeParser or SolutionArchitect. |
 | Task | Work unit | A specific instruction assigned to an agent. |
 | RAG | Retrieval-augmented generation | Finds similar cases before generating architecture/scope decisions. |
-| Vector DB | Embedding search store | ChromaDB locally; CrewAI Knowledge in AMP. |
+| Vector DB | Embedding search store | ChromaDB locally, persisted in `.chromadb/`, using local sentence-transformer embeddings. |
 | Artifact generator | Deterministic output tool | Creates PDF, Markdown spec, and PM review files. |
 | Human approval | Human-in-the-loop | The PM/client reviews outputs before sharing or implementation. |
+
+## CrewAI Agents
+
+| Agent | Role | What It Does |
+|---|---|---|
+| IntakeParser | Business Analyst | Extracts client name, industry, core problem, current tools, integrations, urgency, budget signal, and complexity from the transcript. |
+| SolutionArchitect | AI Solutions Architect | Chooses the architecture, framework, model strategy, and technical rationale for the specific case. Uses RAG context from ChromaDB. |
+| ScopeEstimator | Technical Project Manager | Turns complexity into phases, timeline, acceptance criteria, limitations, watch points, production costs, and required environment variables. |
+| ProposalDrafter | Client Communications Lead | Drafts the executive proposal content and the engineering-ready Markdown content. |
+
+## RAG / Vector DB
+
+The RAG layer uses **ChromaDB** as the local persistent vector database. Documents in `knowledge_base/` are chunked, embedded with `sentence-transformers/all-MiniLM-L6-v2`, and searched for the top similar cases. The SolutionArchitect uses those retrieved cases as grounding context before recommending architecture and scope.
 
 ## Why n8n + CrewAI Together
 

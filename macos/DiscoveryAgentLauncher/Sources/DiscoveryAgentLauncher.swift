@@ -46,6 +46,7 @@ struct LauncherView: View {
         ZStack {
             VisualEffectView(material: .hudWindow, blendingMode: .behindWindow)
                 .ignoresSafeArea()
+                .allowsHitTesting(false)
 
             LinearGradient(
                 colors: [
@@ -57,6 +58,7 @@ struct LauncherView: View {
                 endPoint: .bottomTrailing
             )
             .ignoresSafeArea()
+            .allowsHitTesting(false)
 
             GlassPanel {
                 VStack(alignment: .leading, spacing: 20) {
@@ -188,6 +190,7 @@ struct LauncherView: View {
                     .overlay(
                         RoundedRectangle(cornerRadius: 14, style: .continuous)
                             .stroke(Color.white.opacity(0.34), lineWidth: 1)
+                            .allowsHitTesting(false)
                     )
             }
 
@@ -222,32 +225,38 @@ struct LauncherView: View {
         .overlay(
             RoundedRectangle(cornerRadius: 18, style: .continuous)
                 .stroke(Color.white.opacity(0.34), lineWidth: 1)
+                .allowsHitTesting(false)
         )
     }
 
     private func startLiveCall() {
-        runTask(title: "Starting live call") {
-            if usesHeadphones {
-                try switchToBlackHole()
-            }
+        let selectedClientName = clientName
+        let selectedSessionType = sessionType
+        let shouldUseHeadphones = usesHeadphones
 
-            let output = try runAction([
-                "start",
-                "--client-name", clientName,
-                "--session-type", sessionType
-            ])
-
+        runTask(title: "Starting live call", onSuccess: { output in
             if let id = parseSessionId(from: output) {
                 sessionId = id
                 UserDefaults.standard.set(id, forKey: "DiscoveryAgentLastSessionId")
             }
-            return output
+        }) {
+            if shouldUseHeadphones {
+                try switchToBlackHole()
+            }
+
+            return try runAction([
+                "start",
+                "--client-name", selectedClientName,
+                "--session-type", selectedSessionType
+            ])
         }
     }
 
     private func stopLiveCall() {
+        let selectedSessionId = sessionId
+
         runTask(title: "Stopping live call") {
-            let output = try runAction(["stop", "--session-id", sessionId])
+            let output = try runAction(["stop", "--session-id", selectedSessionId])
             if UserDefaults.standard.string(forKey: "DiscoveryAgentOriginalInputDevice") != nil {
                 _ = try? restoreOriginalInputDevice()
             }
@@ -256,13 +265,17 @@ struct LauncherView: View {
     }
 
     private func processTranscript() {
+        let selectedTranscriptMode = transcriptMode
+        let selectedTranscriptPath = transcriptPath
+        let selectedTranscriptText = transcriptText
+
         runTask(title: "Processing transcript") {
             let path: String
-            if transcriptMode == .file {
-                guard !transcriptPath.isEmpty else { throw LauncherError.message("Choose a transcript file first.") }
-                path = transcriptPath
+            if selectedTranscriptMode == .file {
+                guard !selectedTranscriptPath.isEmpty else { throw LauncherError.message("Choose a transcript file first.") }
+                path = selectedTranscriptPath
             } else {
-                let cleaned = transcriptText.trimmingCharacters(in: .whitespacesAndNewlines)
+                let cleaned = selectedTranscriptText.trimmingCharacters(in: .whitespacesAndNewlines)
                 guard !cleaned.isEmpty else { throw LauncherError.message("Paste a transcript first.") }
                 let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent("discovery-agent-transcript-\(UUID().uuidString).txt")
                 try cleaned.write(to: tempURL, atomically: true, encoding: .utf8)
@@ -284,7 +297,11 @@ struct LauncherView: View {
         }
     }
 
-    private func runTask(title: String, work: @escaping () throws -> String) {
+    private func runTask(
+        title: String,
+        onSuccess: @escaping (String) -> Void = { _ in },
+        work: @escaping () throws -> String
+    ) {
         isRunning = true
         statusTitle = title
         statusMessage = "Working..."
@@ -294,6 +311,7 @@ struct LauncherView: View {
             do {
                 let output = try job()
                 DispatchQueue.main.async {
+                    onSuccess(output)
                     isRunning = false
                     statusTitle = "Complete"
                     statusMessage = output
@@ -358,6 +376,7 @@ private struct ModeButton: View {
         .overlay(
             RoundedRectangle(cornerRadius: 20, style: .continuous)
                 .stroke(Color.white.opacity(isSelected ? 0.60 : 0.25), lineWidth: 1)
+                .allowsHitTesting(false)
         )
         .shadow(color: .black.opacity(isSelected ? 0.18 : 0.06), radius: 12, y: 8)
     }
@@ -388,6 +407,7 @@ private struct PrimaryButton: View {
         .overlay(
             RoundedRectangle(cornerRadius: 18, style: .continuous)
                 .stroke(Color.white.opacity(0.22), lineWidth: 1)
+                .allowsHitTesting(false)
         )
         .shadow(color: .black.opacity(0.22), radius: 16, y: 10)
     }
@@ -409,6 +429,7 @@ private struct GlassPanel<Content: View>: View {
                         ),
                         lineWidth: 1.2
                     )
+                    .allowsHitTesting(false)
             )
             .overlay(alignment: .topLeading) {
                 RoundedRectangle(cornerRadius: 34, style: .continuous)
@@ -417,6 +438,7 @@ private struct GlassPanel<Content: View>: View {
                     .mask(
                         LinearGradient(colors: [.white, .clear], startPoint: .topLeading, endPoint: .center)
                     )
+                    .allowsHitTesting(false)
             }
             .shadow(color: .black.opacity(0.24), radius: 28, y: 18)
     }

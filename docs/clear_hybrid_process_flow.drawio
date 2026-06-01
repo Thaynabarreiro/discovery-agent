@@ -1,80 +1,108 @@
 <mxfile host="app.diagrams.net" modified="2026-06-01T00:00:00.000Z" agent="Discovery Agent" version="24.7.17">
   <diagram id="clear-hybrid-flow" name="Clear Hybrid Flow">
-    <mxGraphModel dx="1400" dy="850" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="900" math="0" shadow="0">
+    <mxGraphModel dx="1700" dy="1100" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1700" pageHeight="1150" math="0" shadow="0">
       <root>
         <mxCell id="0"/>
         <mxCell id="1" parent="0"/>
-        <mxCell id="title" value="Discovery Agent - End-to-End Flow" style="text;html=1;strokeColor=none;fillColor=none;fontSize=28;fontStyle=1;align=center;" vertex="1" parent="1">
-          <mxGeometry x="260" y="20" width="880" height="50" as="geometry"/>
-        </mxCell>
-        <mxCell id="human" value="HUMAN / PM" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1A1A1A;fontColor=#FFFFFF;strokeColor=#1A1A1A;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="60" y="100" width="180" height="50" as="geometry"/>
-        </mxCell>
-        <mxCell id="automation" value="AUTOMATION" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2874A6;fontColor=#FFFFFF;strokeColor=#2874A6;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="310" y="100" width="180" height="50" as="geometry"/>
-        </mxCell>
-        <mxCell id="local" value="LOCAL MAC" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#7A7060;fontColor=#FFFFFF;strokeColor=#7A7060;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="560" y="100" width="180" height="50" as="geometry"/>
-        </mxCell>
-        <mxCell id="agentic" value="AGENTIC REASONING" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#884EA0;fontColor=#FFFFFF;strokeColor=#884EA0;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="810" y="100" width="220" height="50" as="geometry"/>
-        </mxCell>
-        <mxCell id="outputs" value="OUTPUTS" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D13B2A;fontColor=#FFFFFF;strokeColor=#D13B2A;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="1100" y="100" width="180" height="50" as="geometry"/>
+
+        <mxCell id="title" value="Discovery Agent - Hybrid Workflow, Agents, Tools, and Outputs" style="text;html=1;strokeColor=none;fillColor=none;fontSize=28;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="260" y="20" width="1180" height="50" as="geometry"/>
         </mxCell>
 
-        <mxCell id="s1" value="1. Click Dock App&#xa;Floating UI asks: client, session type, action" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F0E8;strokeColor=#1A1A1A;" vertex="1" parent="1">
-          <mxGeometry x="40" y="210" width="220" height="90" as="geometry"/>
+        <mxCell id="lane-human" value="HUMAN / PM" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1A1A1A;fontColor=#FFFFFF;strokeColor=#1A1A1A;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="95" width="220" height="46" as="geometry"/>
         </mxCell>
-        <mxCell id="s2" value="2. n8n Webhook&#xa;Receives Start / Stop / Test command" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EAF2F8;strokeColor=#2874A6;" vertex="1" parent="1">
-          <mxGeometry x="290" y="210" width="220" height="90" as="geometry"/>
+        <mxCell id="lane-n8n" value="N8N / VPS ORCHESTRATION" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2874A6;fontColor=#FFFFFF;strokeColor=#2874A6;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="310" y="95" width="250" height="46" as="geometry"/>
         </mxCell>
-        <mxCell id="s3" value="3. Local Worker API&#xa;localhost:8765 starts capture or test run" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F0E8;strokeColor=#7A7060;" vertex="1" parent="1">
-          <mxGeometry x="540" y="210" width="220" height="90" as="geometry"/>
+        <mxCell id="lane-local" value="LOCAL MAC WORKER" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#7A7060;fontColor=#FFFFFF;strokeColor=#7A7060;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="610" y="95" width="250" height="46" as="geometry"/>
         </mxCell>
-        <mxCell id="s4" value="4. Audio + Whisper&#xa;BlackHole/sounddevice chunks audio; Whisper returns text" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F0E8;strokeColor=#7A7060;" vertex="1" parent="1">
-          <mxGeometry x="540" y="350" width="220" height="100" as="geometry"/>
+        <mxCell id="lane-agents" value="CREWAI AGENTS" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#884EA0;fontColor=#FFFFFF;strokeColor=#884EA0;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="910" y="95" width="350" height="46" as="geometry"/>
         </mxCell>
-        <mxCell id="s5" value="5. Transcript State&#xa;Thread-safe transcript buffer becomes the source input" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F0E8;strokeColor=#7A7060;" vertex="1" parent="1">
-          <mxGeometry x="540" y="500" width="220" height="90" as="geometry"/>
-        </mxCell>
-        <mxCell id="s6" value="6. CrewAI Crew&#xa;Agents run: Intake, Architect, Scope, Drafter" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F4ECF7;strokeColor=#884EA0;" vertex="1" parent="1">
-          <mxGeometry x="800" y="260" width="250" height="100" as="geometry"/>
-        </mxCell>
-        <mxCell id="s7" value="7. RAG / Knowledge&#xa;Vector search over reference cases informs scope" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F4ECF7;strokeColor=#884EA0;" vertex="1" parent="1">
-          <mxGeometry x="800" y="420" width="250" height="100" as="geometry"/>
-        </mxCell>
-        <mxCell id="s8" value="8. Artifact Generator&#xa;PDF, engineering spec, PM review" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FDEDEC;strokeColor=#D13B2A;" vertex="1" parent="1">
-          <mxGeometry x="1090" y="260" width="220" height="100" as="geometry"/>
-        </mxCell>
-        <mxCell id="s9" value="9. Storage + Notification&#xa;n8n can save links to Drive, Notion, GitHub, CRM" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FDEDEC;strokeColor=#D13B2A;" vertex="1" parent="1">
-          <mxGeometry x="1090" y="430" width="220" height="100" as="geometry"/>
+        <mxCell id="lane-outputs" value="OUTPUTS" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D13B2A;fontColor=#FFFFFF;strokeColor=#D13B2A;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1310" y="95" width="250" height="46" as="geometry"/>
         </mxCell>
 
-        <mxCell id="n1" value="Reason: simple PM action before call starts" style="text;html=1;strokeColor=none;fillColor=none;fontSize=11;align=center;" vertex="1" parent="1">
-          <mxGeometry x="40" y="305" width="220" height="30" as="geometry"/>
+        <mxCell id="dock" value="1. Discovery Agent Launcher&#xa;Liquid-glass Dock app&#xa;Modes: Live, Stop, Transcript" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F0E8;strokeColor=#1A1A1A;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="35" y="185" width="230" height="100" as="geometry"/>
         </mxCell>
-        <mxCell id="n2" value="Reason: n8n is best for triggers, retries, integrations" style="text;html=1;strokeColor=none;fillColor=none;fontSize=11;align=center;" vertex="1" parent="1">
-          <mxGeometry x="290" y="305" width="220" height="40" as="geometry"/>
+        <mxCell id="live-choice" value="Live mode question&#xa;Using headphones?&#xa;Yes: switch input to BlackHole&#xa;No: keep current input" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF8E8;strokeColor=#1A1A1A;" vertex="1" parent="1">
+          <mxGeometry x="35" y="330" width="230" height="115" as="geometry"/>
         </mxCell>
-        <mxCell id="n3" value="Reason: audio permissions and BlackHole live on the Mac" style="text;html=1;strokeColor=none;fillColor=none;fontSize=11;align=center;" vertex="1" parent="1">
-          <mxGeometry x="540" y="595" width="220" height="40" as="geometry"/>
-        </mxCell>
-        <mxCell id="n4" value="Reason: CrewAI is best for agent traces and reasoning" style="text;html=1;strokeColor=none;fillColor=none;fontSize=11;align=center;" vertex="1" parent="1">
-          <mxGeometry x="800" y="525" width="250" height="40" as="geometry"/>
-        </mxCell>
-        <mxCell id="n5" value="Reason: deterministic files should be reproducible and named clearly" style="text;html=1;strokeColor=none;fillColor=none;fontSize=11;align=center;" vertex="1" parent="1">
-          <mxGeometry x="1090" y="535" width="220" height="40" as="geometry"/>
+        <mxCell id="transcript-choice" value="Transcript mode&#xa;Choose file OR paste transcript text&#xa;No audio routing needed" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF8E8;strokeColor=#1A1A1A;" vertex="1" parent="1">
+          <mxGeometry x="35" y="490" width="230" height="95" as="geometry"/>
         </mxCell>
 
-        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#1A1A1A;strokeWidth=2;" edge="1" parent="1" source="s1" target="s2"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#2874A6;strokeWidth=2;" edge="1" parent="1" source="s2" target="s3"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#7A7060;strokeWidth=2;" edge="1" parent="1" source="s3" target="s4"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#7A7060;strokeWidth=2;" edge="1" parent="1" source="s4" target="s5"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#884EA0;strokeWidth=2;" edge="1" parent="1" source="s5" target="s6"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#884EA0;strokeWidth=2;" edge="1" parent="1" source="s6" target="s7"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#D13B2A;strokeWidth=2;" edge="1" parent="1" source="s7" target="s8"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#D13B2A;strokeWidth=2;" edge="1" parent="1" source="s8" target="s9"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="n8n-start" value="2. n8n Webhooks&#xa;/discovery-agent/start&#xa;/discovery-agent/stop&#xa;Runs on VPS at n8n.moveai.pro" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EAF2F8;strokeColor=#2874A6;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="310" y="215" width="250" height="125" as="geometry"/>
+        </mxCell>
+        <mxCell id="n8n-role" value="Role: process orchestrator&#xa;Best for triggers, retries, routing, future Drive/Notion/CRM notifications" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EAF2F8;strokeColor=#2874A6;" vertex="1" parent="1">
+          <mxGeometry x="310" y="390" width="250" height="100" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="tunnel" value="3. Cloudflare Tunnel&#xa;discovery-agent-worker.moveai.pro&#xa;Secure public route to the Mac worker" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EAF2F8;strokeColor=#2874A6;" vertex="1" parent="1">
+          <mxGeometry x="610" y="185" width="250" height="105" as="geometry"/>
+        </mxCell>
+        <mxCell id="worker" value="4. FastAPI Local Worker&#xa;localhost:8765&#xa;Endpoints: /start-call, /stop-call, /health" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F0E8;strokeColor=#7A7060;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="610" y="335" width="250" height="110" as="geometry"/>
+        </mxCell>
+        <mxCell id="audio" value="5A. Live tools&#xa;sounddevice captures 30s chunks&#xa;Whisper transcribes chunks&#xa;thread-safe transcript buffer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F0E8;strokeColor=#7A7060;" vertex="1" parent="1">
+          <mxGeometry x="610" y="490" width="250" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="manual" value="5B. Transcript tools&#xa;Reads selected .txt file&#xa;or temporary pasted transcript file&#xa;then runs same pipeline" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F0E8;strokeColor=#7A7060;" vertex="1" parent="1">
+          <mxGeometry x="610" y="665" width="250" height="120" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="crew" value="6. CrewAI Crew&#xa;Multi-agent workflow over the final transcript" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F4ECF7;strokeColor=#884EA0;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="930" y="170" width="310" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="agent-intake" value="Agent 1: IntakeParser&#xa;Role: Business Analyst&#xa;Extracts structured client facts: problem, tools, integrations, urgency, complexity" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F4ECF7;strokeColor=#884EA0;" vertex="1" parent="1">
+          <mxGeometry x="930" y="285" width="310" height="95" as="geometry"/>
+        </mxCell>
+        <mxCell id="agent-architect" value="Agent 2: SolutionArchitect&#xa;Role: AI Solutions Architect&#xa;Chooses architecture, frameworks, model strategy, and uses RAG context" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F4ECF7;strokeColor=#884EA0;" vertex="1" parent="1">
+          <mxGeometry x="930" y="420" width="310" height="95" as="geometry"/>
+        </mxCell>
+        <mxCell id="rag" value="RAG / Vector DB&#xa;ChromaDB local persistent store&#xa;Embeddings: all-MiniLM-L6-v2&#xa;Searches 3 similar cases from knowledge_base" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EBF5FB;strokeColor=#2874A6;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="930" y="555" width="310" height="115" as="geometry"/>
+        </mxCell>
+        <mxCell id="agent-scope" value="Agent 3: ScopeEstimator&#xa;Role: Technical Project Manager&#xa;Defines phases, acceptance criteria, timeline, limitations, API/infra cost, env vars" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F4ECF7;strokeColor=#884EA0;" vertex="1" parent="1">
+          <mxGeometry x="930" y="710" width="310" height="105" as="geometry"/>
+        </mxCell>
+        <mxCell id="agent-drafter" value="Agent 4: ProposalDrafter&#xa;Role: Client Communications Lead&#xa;Creates executive proposal content and engineering-ready Markdown content" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F4ECF7;strokeColor=#884EA0;" vertex="1" parent="1">
+          <mxGeometry x="930" y="855" width="310" height="100" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="pdf" value="7A. client_proposal.pdf&#xa;Executive language&#xa;No stack, no API keys, no technical jargon&#xa;Generated with WeasyPrint" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FDEDEC;strokeColor=#D13B2A;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1310" y="270" width="260" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="spec" value="7B. engineering_spec.md&#xa;Editable in Notion/GitHub&#xa;Architecture, agents, data flow, phases, env vars, watch points" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FDEDEC;strokeColor=#D13B2A;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1310" y="455" width="260" height="125" as="geometry"/>
+        </mxCell>
+        <mxCell id="pm-review" value="7C. pm_call_review.md&#xa;PM learning artifact&#xa;What was said, how to scope live, hard vs easy, follow-up questions" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FDEDEC;strokeColor=#D13B2A;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1310" y="650" width="260" height="125" as="geometry"/>
+        </mxCell>
+        <mxCell id="github" value="8. Optional GitHub upload&#xa;Commit/push project artifacts when enabled&#xa;output/ remains local by default" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FDEDEC;strokeColor=#D13B2A;" vertex="1" parent="1">
+          <mxGeometry x="1310" y="845" width="260" height="100" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#1A1A1A;strokeWidth=2;" edge="1" parent="1" source="dock" target="n8n-start"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#2874A6;strokeWidth=2;" edge="1" parent="1" source="n8n-start" target="tunnel"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#2874A6;strokeWidth=2;" edge="1" parent="1" source="tunnel" target="worker"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e4" value="live" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#7A7060;strokeWidth=2;fontColor=#7A7060;" edge="1" parent="1" source="worker" target="audio"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e5" value="transcript" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#7A7060;strokeWidth=2;fontColor=#7A7060;" edge="1" parent="1" source="worker" target="manual"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#884EA0;strokeWidth=2;" edge="1" parent="1" source="audio" target="crew"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#884EA0;strokeWidth=2;" edge="1" parent="1" source="manual" target="crew"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#884EA0;strokeWidth=2;" edge="1" parent="1" source="crew" target="agent-intake"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#884EA0;strokeWidth=2;" edge="1" parent="1" source="agent-intake" target="agent-architect"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e10" value="retrieval context" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#2874A6;strokeWidth=2;fontColor=#2874A6;" edge="1" parent="1" source="rag" target="agent-architect"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#884EA0;strokeWidth=2;" edge="1" parent="1" source="agent-architect" target="agent-scope"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#884EA0;strokeWidth=2;" edge="1" parent="1" source="agent-scope" target="agent-drafter"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#D13B2A;strokeWidth=2;" edge="1" parent="1" source="agent-drafter" target="pdf"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#D13B2A;strokeWidth=2;" edge="1" parent="1" source="agent-drafter" target="spec"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#D13B2A;strokeWidth=2;" edge="1" parent="1" source="agent-drafter" target="pm-review"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#D13B2A;strokeWidth=2;" edge="1" parent="1" source="pm-review" target="github"><mxGeometry relative="1" as="geometry"/></mxCell>
       </root>
     </mxGraphModel>
   </diagram>
