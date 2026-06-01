@@ -45,7 +45,7 @@ class LiveSession:
         self.lock = threading.Lock()
         self.transcript_parts: list[str] = []
         self.stop_event = threading.Event()
-        self.capture = AudioCapture(self.chunk_queue)
+        self.capture = AudioCapture(self.chunk_queue, chunk_seconds=5)
         self.audio_thread = threading.Thread(target=self.capture.run, daemon=True)
         self.transcription_thread = threading.Thread(target=self._transcribe_loop, daemon=True)
         self.started_at = time.time()
@@ -78,6 +78,9 @@ class LiveSession:
                 text = transcribe_chunk(path)
                 with self.lock:
                     self.transcript_parts.append(text)
+                print(f"Transcribed {path}: {len(text)} chars", flush=True)
+            except Exception as exc:
+                print(f"Transcription failed for {path}: {exc}", flush=True)
             finally:
                 self.chunk_queue.task_done()
 

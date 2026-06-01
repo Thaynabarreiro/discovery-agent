@@ -31,8 +31,9 @@ struct LauncherView: View {
     @State private var mode: LauncherMode = .live
     @State private var clientName = ""
     @State private var sessionType = "Discovery Call"
-    @State private var usesHeadphones = true
+    @State private var usesHeadphones = false
     @State private var sessionId = UserDefaults.standard.string(forKey: "DiscoveryAgentLastSessionId") ?? ""
+    @State private var isRecording = UserDefaults.standard.bool(forKey: "DiscoveryAgentIsRecording")
     @State private var transcriptMode: TranscriptMode = .paste
     @State private var transcriptText = ""
     @State private var transcriptPath = ""
@@ -108,10 +109,10 @@ struct LauncherView: View {
 
     private var modePicker: some View {
         HStack(spacing: 10) {
-            ModeButton(title: "Start Live Call", systemImage: "waveform.circle.fill", isSelected: mode == .live) {
+            ModeButton(title: "Live", systemImage: "waveform.circle.fill", isSelected: mode == .live) {
                 mode = .live
             }
-            ModeButton(title: "Stop Live Call", systemImage: "stop.circle.fill", isSelected: mode == .stop) {
+            ModeButton(title: "Stop", systemImage: "stop.circle.fill", isSelected: mode == .stop) {
                 mode = .stop
             }
             ModeButton(title: "Transcript", systemImage: "doc.text.fill", isSelected: mode == .transcript) {
@@ -132,28 +133,36 @@ struct LauncherView: View {
 
             Toggle(isOn: $usesHeadphones) {
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("Using headphones")
-                    Text("If enabled, input switches to BlackHole before capture.")
+                    Text("Using headphones in an online call")
+                    Text("Turn this on only when you need to capture call audio through BlackHole. Leave it off to test with your microphone.")
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
             }
             .toggleStyle(.switch)
 
-            PrimaryButton(title: "Start Live Call", systemImage: "record.circle") {
+            PrimaryButton(title: isRecording ? "Recording Started" : "Start Recording", systemImage: "record.circle") {
                 startLiveCall()
             }
+            .disabled(isRecording || isRunning)
+            .opacity((isRecording || isRunning) ? 0.65 : 1)
         }
     }
 
     private var stopControls: some View {
         VStack(alignment: .leading, spacing: 14) {
-            TextField("Session ID", text: $sessionId)
+            TextField("Current session ID", text: $sessionId)
                 .textFieldStyle(.roundedBorder)
 
-            PrimaryButton(title: "Stop Live Call", systemImage: "stop.fill") {
+            Text(isRecording ? "Recording is active. Stop will finalize transcription and generate the outputs." : "No active recording is marked in this launcher. If you started from another window, paste the session ID here.")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+
+            PrimaryButton(title: "Stop Recording and Generate Outputs", systemImage: "stop.fill") {
                 stopLiveCall()
             }
+            .disabled(sessionId.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || isRunning)
+            .opacity((sessionId.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || isRunning) ? 0.65 : 1)
         }
     }
 
@@ -238,6 +247,11 @@ struct LauncherView: View {
             if let id = parseSessionId(from: output) {
                 sessionId = id
                 UserDefaults.standard.set(id, forKey: "DiscoveryAgentLastSessionId")
+                isRecording = true
+                UserDefaults.standard.set(true, forKey: "DiscoveryAgentIsRecording")
+                mode = .stop
+                statusTitle = "Recording"
+                statusMessage = "Recording started.\n\nSession ID:\n\(id)\n\nUse Stop to finalize transcription and generate the outputs."
             }
         }) {
             if shouldUseHeadphones {
@@ -255,7 +269,12 @@ struct LauncherView: View {
     private func stopLiveCall() {
         let selectedSessionId = sessionId
 
-        runTask(title: "Stopping live call") {
+        runTask(title: "Stopping live call", onSuccess: { _ in
+            isRecording = false
+            UserDefaults.standard.set(false, forKey: "DiscoveryAgentIsRecording")
+            UserDefaults.standard.removeObject(forKey: "DiscoveryAgentLastSessionId")
+            sessionId = ""
+        }) {
             let output = try runAction(["stop", "--session-id", selectedSessionId])
             if UserDefaults.standard.string(forKey: "DiscoveryAgentOriginalInputDevice") != nil {
                 _ = try? restoreOriginalInputDevice()
@@ -304,7 +323,11 @@ struct LauncherView: View {
     ) {
         isRunning = true
         statusTitle = title
-        statusMessage = "Working..."
+        if title == "Stopping live call" {
+            statusMessage = "Stopping capture, draining the last audio chunk, transcribing, and generating outputs. This can take a few seconds."
+        } else {
+            statusMessage = "Working..."
+        }
 
         let job = work
         DispatchQueue.global(qos: .userInitiated).async {
