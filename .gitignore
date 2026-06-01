@@ -4,6 +4,7 @@
 output/
 logs/
 n8n_data/
+macos/DiscoveryAgentLauncher/.build/
 __pycache__/
 *.pyc
 venv/
