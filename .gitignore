@@ -2,6 +2,8 @@
 .DS_Store
 .chromadb/
 output/
+logs/
+n8n_data/
 __pycache__/
 *.pyc
 venv/
