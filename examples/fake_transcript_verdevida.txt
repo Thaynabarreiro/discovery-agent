@@ -1,0 +1,35 @@
+Discovery Call Transcript
+Date: 2026-06-01
+Participants: Thayna from Zaigo, Mariana Costa from VerdeVida Clinic Group
+
+Thayna: Mariana, obrigada pelo tempo. Para começar, me conta o que está mais travando a operação hoje.
+
+Mariana: A gente tem quatro clínicas de estética e bem-estar, e o maior problema é o acompanhamento de leads e pacientes depois da primeira conversa. Hoje chega lead pelo Instagram, WhatsApp, formulário do site e indicação. A equipe copia tudo para uma planilha, tenta responder manualmente e depois esquece de fazer follow-up.
+
+Thayna: Isso impacta mais vendas, atendimento ou operação?
+
+Mariana: Os três, mas principalmente vendas. A gente perde muita oportunidade porque uma pessoa pede avaliação, a recepcionista responde, mas se a pessoa não agenda na hora, ninguém volta nela. Também temos pacientes que começam tratamentos e somem. Ninguém tem uma visão clara de quem precisa ser reativado.
+
+Thayna: Quais ferramentas vocês usam hoje?
+
+Mariana: WhatsApp Business, Instagram DM, Google Sheets, Agenda Google e um sistema simples de prontuário chamado ClinicPlus. Não temos CRM de verdade. A planilha tem umas 8 mil linhas acumuladas, mas está bagunçada.
+
+Thayna: Quantas pessoas usariam a solução?
+
+Mariana: Umas 12 pessoas entre recepção, coordenadoras das unidades e eu. Eu queria ver um painel para saber quantos leads novos entraram, quantos estão sem resposta, quantos agendaram e quantos precisam de follow-up.
+
+Thayna: Existe alguma urgência específica?
+
+Mariana: Sim. Queremos testar algo antes da campanha de inverno, que começa em três semanas. Se der certo, usamos nas quatro unidades.
+
+Thayna: O que seria um bom resultado para vocês?
+
+Mariana: Hoje a equipe gasta umas 3 horas por dia olhando planilhas e WhatsApp. Se a gente conseguisse reduzir isso para menos de 1 hora e garantir que nenhum lead fique sem retorno, já seria excelente. Também queria mensagens sugeridas, mas com aprovação humana antes de enviar.
+
+Thayna: Existem integrações obrigatórias no primeiro momento?
+
+Mariana: WhatsApp é o mais importante. Google Sheets também, porque já está tudo lá. Instagram pode ficar para uma segunda fase. O ClinicPlus não sei se tem API, precisamos verificar.
+
+Thayna: E orçamento, vocês já têm algo aprovado?
+
+Mariana: Temos verba para um piloto, talvez algo entre R$ 15 mil e R$ 25 mil se o escopo for claro. Depois podemos expandir.
