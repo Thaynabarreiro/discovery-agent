@@ -73,12 +73,15 @@ class IntakeParser:
     def _find_client_name(self, text: str) -> str:
         patterns = [
             r"(?:client|cliente|company|empresa)\s*[:\-]\s*([A-Z][\w\s&.-]{2,60})",
-            r"(?:prepared for|para)\s+([A-Z][\w\s&.-]{2,60})",
+            r"(?:prepared for)\s+([A-Z][\w\s&.-]{2,60})",
+            r"(?:Participants|Participantes)\s*[:\-]\s*[^\n,]+,\s*([A-Z][^\n,]{2,60})\s+from\s+([A-Z][^\n,]{2,60})",
         ]
         for pattern in patterns:
             match = re.search(pattern, text, re.IGNORECASE)
             if match:
-                return match.group(1).strip().rstrip(".")
+                if len(match.groups()) > 1 and match.group(2):
+                    return " ".join(match.group(2).split()).rstrip(".")
+                return " ".join(match.group(1).split()).rstrip(".")
         return "TBD"
 
     def _find_industry(self, text: str) -> str:
@@ -102,7 +105,16 @@ class IntakeParser:
         return match.group(1).strip() if match else "TBD"
 
     def _find_budget_signal(self, text: str) -> str:
-        match = re.search(r"([$€£R]\$?\s?\d[\d.,kKmM ]+|\d+\s?(?:k|mil|thousand))", text)
+        budget_context = re.search(
+            r"(?:budget|orçamento|verba)[^.:\n]*[:\-]?\s*([^.\n]{0,120})",
+            text,
+            re.IGNORECASE,
+        )
+        if budget_context:
+            match = re.search(r"(R\$\s?\d[\d.,\s]*(?:mil)?|[$€£]\s?\d[\d.,kKmM ]+|\d+\s?(?:k|mil|thousand))", budget_context.group(1), re.IGNORECASE)
+            if match:
+                return match.group(1).strip()
+        match = re.search(r"(R\$\s?\d[\d.,\s]*(?:mil)?|[$€£]\s?\d[\d.,kKmM ]+)", text, re.IGNORECASE)
         return match.group(1).strip() if match else "TBD"
 
     def _infer_complexity(self, lower: str, integrations: list[str]) -> str:
