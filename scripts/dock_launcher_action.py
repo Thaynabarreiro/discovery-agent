@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from __future__ import annotations
 
 import argparse
@@ -41,7 +42,15 @@ def main() -> None:
 
 def _post_json(url: str, payload: dict) -> str:
     data = json.dumps(payload).encode("utf-8")
-    request = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json"}, method="POST")
+    request = urllib.request.Request(
+        url,
+        data=data,
+        headers={
+            "Content-Type": "application/json",
+            "User-Agent": "DiscoveryAgentLauncher/1.0",
+        },
+        method="POST",
+    )
     try:
         with urllib.request.urlopen(request, timeout=600) as response:
             return response.read().decode("utf-8")
