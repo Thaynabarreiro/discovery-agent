@@ -1,0 +1,99 @@
+<mxfile host="app.diagrams.net" modified="2026-06-01T00:00:00.000Z" agent="Discovery Agent" version="24.7.17">
+  <diagram id="hybrid-discovery-agent" name="Hybrid Discovery Agent">
+    <mxGraphModel dx="1500" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="title" value="Hybrid Discovery Agent Architecture" style="text;html=1;strokeColor=none;fillColor=none;fontSize=28;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="420" y="20" width="760" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="lane1" value="Local Mac Layer" style="swimlane;html=1;rounded=0;startSize=28;fillColor=#F5F0E8;strokeColor=#D8D0C4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="90" width="460" height="660" as="geometry"/>
+        </mxCell>
+        <mxCell id="lane2" value="Automation / Orchestration Layer" style="swimlane;html=1;rounded=0;startSize=28;fillColor=#EAF2F8;strokeColor=#A9CCE3;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="540" y="90" width="430" height="660" as="geometry"/>
+        </mxCell>
+        <mxCell id="lane3" value="Agentic Reasoning + Observability Layer" style="swimlane;html=1;rounded=0;startSize=28;fillColor=#F4ECF7;strokeColor=#C39BD3;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1010" y="90" width="530" height="660" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="dock" value="Dock App / Floating UI&#xa;Session launcher&#xa;Collects: client, session type, output destination" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1A1A1A;fontColor=#FFFFFF;strokeColor=#1A1A1A;" vertex="1" parent="1">
+          <mxGeometry x="80" y="145" width="360" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="localworker" value="Local Worker API&#xa;FastAPI or Flask service on localhost&#xa;Receives start/stop commands" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#7A7060;" vertex="1" parent="1">
+          <mxGeometry x="80" y="275" width="360" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="audio" value="Audio Capture Tool&#xa;sounddevice + BlackHole&#xa;30s chunks, non-blocking queue" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#7A7060;" vertex="1" parent="1">
+          <mxGeometry x="80" y="405" width="360" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="whisper" value="Transcription Tool&#xa;OpenAI Whisper API&#xa;Thread-safe transcript buffer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#7A7060;" vertex="1" parent="1">
+          <mxGeometry x="80" y="535" width="360" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="localoutputs" value="Local Artifact Generation&#xa;WeasyPrint PDF + Markdown&#xa;Client proposal, engineering spec, PM review" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#7A7060;" vertex="1" parent="1">
+          <mxGeometry x="80" y="655" width="360" height="70" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="n8ntrigger" value="n8n Trigger&#xa;Manual button / webhook / calendar event&#xa;Best for process orchestration" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#2874A6;" vertex="1" parent="1">
+          <mxGeometry x="580" y="145" width="350" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="n8nflow" value="n8n Workflow&#xa;Start call, monitor status, route files&#xa;Retry/error handling + notifications" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#2874A6;" vertex="1" parent="1">
+          <mxGeometry x="580" y="305" width="350" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="storage" value="Storage / Handoff&#xa;Google Drive, GitHub, Notion, CRM&#xa;System of record for deliverables" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#2874A6;" vertex="1" parent="1">
+          <mxGeometry x="580" y="590" width="350" height="100" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="crewai" value="CrewAI AMP Deployment&#xa;Agentic framework / crew orchestration&#xa;Traces, tasks, LLM calls, agent outputs" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#884EA0;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="145" width="440" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="agents" value="Agents / Roles&#xa;IntakeParser, SolutionArchitect, ScopeEstimator, ProposalDrafter&#xa;Sequential multi-agent workflow" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#884EA0;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="285" width="440" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="rag" value="RAG Layer&#xa;Knowledge Base + Vector DB&#xa;ChromaDB locally, CrewAI Knowledge in AMP" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#884EA0;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="435" width="440" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="llm" value="LLM Layer&#xa;Claude Sonnet via Anthropic&#xa;Structured reasoning + content drafting" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#884EA0;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="575" width="440" height="90" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;strokeColor=#1A1A1A;" edge="1" parent="1" source="dock" target="localworker">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;strokeColor=#1A1A1A;" edge="1" parent="1" source="localworker" target="audio">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;strokeColor=#1A1A1A;" edge="1" parent="1" source="audio" target="whisper">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;strokeColor=#1A1A1A;" edge="1" parent="1" source="whisper" target="localoutputs">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e5" value="start/stop" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;strokeColor=#2874A6;fontColor=#2874A6;" edge="1" parent="1" source="n8ntrigger" target="localworker">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e6" value="transcript payload" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;strokeColor=#884EA0;fontColor=#884EA0;" edge="1" parent="1" source="whisper" target="crewai">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;strokeColor=#884EA0;" edge="1" parent="1" source="crewai" target="agents">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;strokeColor=#884EA0;" edge="1" parent="1" source="agents" target="rag">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;strokeColor=#884EA0;" edge="1" parent="1" source="rag" target="llm">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e10" value="links + files" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;strokeColor=#2874A6;fontColor=#2874A6;" edge="1" parent="1" source="localoutputs" target="storage">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e11" value="notify / archive" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;strokeColor=#2874A6;fontColor=#2874A6;" edge="1" parent="1" source="n8nflow" target="storage">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;strokeColor=#2874A6;" edge="1" parent="1" source="n8ntrigger" target="n8nflow">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

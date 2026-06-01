@@ -14,6 +14,8 @@ from _agent.agents.scope_estimator import ScopeEstimator
 from _agent.agents.solution_architect import SolutionArchitect
 from _agent.tools.github_uploader import upload_to_github
 from _agent.tools.markdown_generator import generate_engineering_spec
+from _agent.tools.output_naming import artifact_prefix, extract_discovery_date
+from _agent.tools.pm_review_generator import generate_pm_call_review
 from _agent.tools.pdf_generator import generate_client_proposal
 
 
@@ -54,11 +56,17 @@ def run_pipeline(transcript: str, push_to_github: bool = True) -> dict:
 
         progress.add_task("ProposalDrafter working...", total=None)
         payload = ProposalDrafter().run(intake, architecture, scope)
+        discovery_date = extract_discovery_date(transcript)
+        payload["metadata"] = {
+            "discovery_date": discovery_date,
+            "artifact_prefix": artifact_prefix(intake.get("client_name", "Client"), discovery_date),
+        }
         if crew_review:
             payload["engineering_spec"]["crew_review"] = crew_review
 
     pdf_path = generate_client_proposal(payload)
     md_path = generate_engineering_spec(payload)
+    pm_review_path = generate_pm_call_review(payload)
     repo_url = None
     if push_to_github and os.getenv("ENABLE_GITHUB_UPLOAD", "true").lower() == "true":
         try:
@@ -66,7 +74,7 @@ def run_pipeline(transcript: str, push_to_github: bool = True) -> dict:
         except Exception as exc:
             console.print(f"[yellow]GitHub upload skipped/failed: {exc}[/yellow]")
 
-    return {"pdf_path": pdf_path, "md_path": md_path, "repo_url": repo_url, "payload": payload}
+    return {"pdf_path": pdf_path, "md_path": md_path, "pm_review_path": pm_review_path, "repo_url": repo_url, "payload": payload}
 
 
 def _read_transcript() -> str:
@@ -92,6 +100,7 @@ def _print_result(result: dict) -> None:
     lines = [
         f"Client proposal: {result['pdf_path']}",
         f"Engineering spec: {result['md_path']}",
+        f"PM call review: {result['pm_review_path']}",
         f"GitHub URL: {result['repo_url'] or 'not available'}",
     ]
     console.print(Panel("\n".join(lines), title="Done", border_style="green"))

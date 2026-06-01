@@ -1,20 +1,19 @@
 from __future__ import annotations
 
-from datetime import datetime
 from pathlib import Path
 
 
 def generate_engineering_spec(payload: dict, output_dir: str = "output") -> Path:
-    now = datetime.now()
     out_dir = Path(output_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
-    path = out_dir / f"engineering_spec_{now:%Y-%m-%d_%H-%M}.md"
+    metadata = payload["metadata"]
+    path = out_dir / f"{metadata['artifact_prefix']}_engineering_spec.md"
 
     spec = payload["engineering_spec"]
     intake = spec["intake"]
     architecture = spec["architecture"]
     scope = spec["scope"]
-    date = now.strftime("%Y-%m-%d")
+    date = metadata["discovery_date"]
 
     decisions = "\n".join(
         f"| {d['layer']} | {d['chosen']} | {d['alternatives']} | {d['rationale']} |"

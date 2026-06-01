@@ -72,7 +72,7 @@ def run_live_mode() -> None:
     transcript = buffer.read()
     if transcript.strip():
         result = run_pipeline(transcript)
-        console.print(Panel(f"Client proposal: {result['pdf_path']}\nEngineering spec: {result['md_path']}\nGitHub URL: {result['repo_url'] or 'not available'}", title="Live Mode Complete"))
+        console.print(Panel(f"Client proposal: {result['pdf_path']}\nEngineering spec: {result['md_path']}\nPM call review: {result['pm_review_path']}\nGitHub URL: {result['repo_url'] or 'not available'}", title="Live Mode Complete"))
     else:
         console.print("[red]No transcript was captured.[/red]")
 

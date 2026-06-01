@@ -16,6 +16,7 @@ def kickoff(inputs: dict[str, Any] | None = None) -> dict[str, str | None]:
     return {
         "client_proposal": str(result["pdf_path"]),
         "engineering_spec": str(result["md_path"]),
+        "pm_call_review": str(result["pm_review_path"]),
         "github_url": result["repo_url"],
     }
 
