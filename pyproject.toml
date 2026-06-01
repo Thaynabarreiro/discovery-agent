@@ -2,7 +2,7 @@
 name = "discovery-agent"
 version = "0.1.0"
 description = "Discovery call agent using WAT architecture and CrewAI orchestration."
-authors = [{ name = "Zaigo", email = "hello@example.com" }]
+authors = [{ name = "AI Delivery Team", email = "hello@example.com" }]
 requires-python = ">=3.11,<3.13"
 dependencies = [
   "crewai[tools]",

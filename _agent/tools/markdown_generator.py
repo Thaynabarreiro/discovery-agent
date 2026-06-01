@@ -126,7 +126,7 @@ Transcript -> IntakeParser -> SolutionArchitect -> ScopeEstimator -> ProposalDra
 
 > WARNING: Values are NEVER stored in this document.
 > Share values via secure channel (1Password, AWS Secrets Manager, or client vault).
-> Client provides their own keys for their systems. Zaigo provides keys for shared infra.
+> Client provides their own keys for their systems. The delivery team provides keys for shared infra.
 
 | Variable | Purpose | Who Provides |
 |---|---|---|

@@ -41,9 +41,9 @@ class ScopeEstimator:
             ],
             "infra_cost": "Estimated low to moderate monthly API and hosting cost; final number depends on call volume, transcript length, and model choice.",
             "environment_variables": [
-                {"variable": "ANTHROPIC_API_KEY", "purpose": "LLM access", "who_provides": "Zaigo"},
-                {"variable": "OPENAI_API_KEY", "purpose": "Whisper transcription", "who_provides": "Zaigo"},
-                {"variable": "CHROMA_PERSIST_DIR", "purpose": "Local vector database path", "who_provides": "Zaigo"},
+                {"variable": "ANTHROPIC_API_KEY", "purpose": "LLM access", "who_provides": "Delivery Team"},
+                {"variable": "OPENAI_API_KEY", "purpose": "Whisper transcription", "who_provides": "Delivery Team"},
+                {"variable": "CHROMA_PERSIST_DIR", "purpose": "Local vector database path", "who_provides": "Delivery Team"},
                 {"variable": "[CLIENT_SYSTEM]_KEY", "purpose": "Client system access", "who_provides": "Client IT"},
             ],
         }

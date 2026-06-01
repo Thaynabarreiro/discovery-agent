@@ -29,24 +29,25 @@ class IntakeParser:
     role = "Business Analyst"
     goal = "Extract structured data from a discovery call transcript."
 
-    TOOL_PATTERNS = [
-        "salesforce",
-        "hubspot",
-        "pipedrive",
-        "notion",
-        "google sheets",
-        "airtable",
-        "slack",
-        "whatsapp",
-        "zapier",
-        "make",
-        "excel",
-    ]
+    TOOL_PATTERNS = {
+        "salesforce": "Salesforce",
+        "hubspot": "HubSpot",
+        "pipedrive": "Pipedrive",
+        "notion": "Notion",
+        "google sheets": "Google Sheets",
+        "airtable": "Airtable",
+        "slack": "Slack",
+        "whatsapp": "WhatsApp",
+        "zapier": "Zapier",
+        "make.com": "Make",
+        "integromat": "Make",
+        "excel": "Excel",
+    }
 
     def run(self, transcript: str) -> dict:
         text = transcript.strip()
         lower = text.lower()
-        tools = [tool.title() for tool in self.TOOL_PATTERNS if tool in lower]
+        tools = [label for pattern, label in self.TOOL_PATTERNS.items() if re.search(rf"\b{re.escape(pattern)}\b", lower)]
         integrations = [tool for tool in tools if tool not in {"Excel", "Google Sheets", "Notion"}]
 
         client_name = self._find_client_name(text)

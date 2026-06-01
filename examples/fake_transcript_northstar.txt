@@ -1,0 +1,35 @@
+Discovery Call Transcript
+Date: 2026-06-01
+Participants: Thayna from AI Delivery Team, Claire Bennett from Northstar Wellness Group
+
+Thayna: Claire, thanks for taking the time today. To start, what is the main operational bottleneck you want to solve?
+
+Claire: We run three wellness clinics, and the biggest issue is lead follow-up after the first conversation. Leads come from Instagram, WhatsApp, our website form, and referrals. The reception team copies everything into a spreadsheet, replies manually, and then follow-up gets inconsistent.
+
+Thayna: Is the impact mostly on sales, service quality, or operations?
+
+Claire: All three, but mostly sales. A prospect asks about an assessment, someone replies, and if the prospect does not book immediately, nobody reliably follows up. We also have patients who start a treatment plan and then disappear. I do not have a clear view of who needs reactivation.
+
+Thayna: Which tools are you using today?
+
+Claire: WhatsApp Business, Instagram DM, Google Sheets, Google Calendar, and a lightweight clinic platform called ClinicPlus. We do not have a proper CRM. The spreadsheet has around 8,000 accumulated rows, but it is messy.
+
+Thayna: How many people would use the solution?
+
+Claire: Around 12 people, including reception, clinic coordinators, and me. I want a dashboard showing new leads, unanswered leads, booked assessments, and follow-up opportunities.
+
+Thayna: Is there a specific deadline?
+
+Claire: Yes. We want to test something before our winter campaign starts in three weeks. If it works, we will roll it out across all clinics.
+
+Thayna: What would a good result look like?
+
+Claire: Today the team spends around 3 hours per day checking spreadsheets and WhatsApp. If we could reduce that to under 1 hour and make sure no lead is left without a response, that would be excellent. We also want suggested messages, but with human approval before anything is sent.
+
+Thayna: Are there mandatory integrations for phase one?
+
+Claire: WhatsApp is the most important. Google Sheets too, because that is where the current lead history lives. Instagram can wait for phase two. We need to check whether ClinicPlus has an API.
+
+Thayna: Have you already approved a budget range?
+
+Claire: We have budget for a pilot, probably between $4,000 and $7,000 if the scope is clear. We can expand later if the pilot works.
