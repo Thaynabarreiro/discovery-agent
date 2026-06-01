@@ -15,6 +15,8 @@ architecture_task:
     Based on the intake and transcript, choose and justify the solution architecture.
     Evaluate CrewAI, LangGraph, Claude SDK, and Gemini SDK. Evaluate Claude Sonnet,
     Claude Haiku, and Gemini Flash. Include vector database and infrastructure decisions.
+    Consult the available reference cases through crew knowledge and cite the closest
+    case IDs when they influenced the architecture recommendation.
   expected_output: >
     A framework and stack decision table with specific rationale for this client case.
   agent: solution_architect
@@ -43,6 +45,8 @@ drafting_task:
        agent architecture, data flow, phases, env vars, limitations, and open questions.
 
     Current date: {current_date}
+    Use the available reference cases only as analogies. Do not claim they are the
+    current client's project.
   expected_output: >
     A complete client proposal draft and a complete engineering spec draft.
   agent: proposal_drafter

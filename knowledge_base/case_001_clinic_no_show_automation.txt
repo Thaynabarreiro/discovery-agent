@@ -1,0 +1,36 @@
+Case ID: CASE-001
+Client Type: Multi-location dental clinic group
+Industry: Healthcare services
+Company Size: 42 employees
+
+Initial Situation:
+The client was losing revenue because patient no-shows were managed manually. Receptionists exported appointment lists from the scheduling system, copied patient details into spreadsheets, and sent WhatsApp reminders one by one. Missed follow-ups also made it hard to know which patients needed a second reminder.
+
+Core Problem:
+Manual reminder workflows were inconsistent, slow, and hard to audit. The team needed a safer process that could identify upcoming appointments, detect missing confirmations, and trigger the right reminder sequence.
+
+Current Tools:
+- Google Sheets
+- WhatsApp Business
+- Clinic scheduling system
+- Gmail
+
+Solution Delivered:
+A lightweight automation pipeline pulled appointment data every morning, normalized patient records, classified confirmation status, and generated reminder tasks. The system included human approval before sending messages and a daily operations report.
+
+Architecture Notes:
+CrewAI was appropriate because the process had clear sequential roles: intake, data validation, message drafting, and operations summary. No complex loop or graph state was required. ChromaDB was used only for internal examples of approved reminder copy and escalation patterns.
+
+Business Outcome:
+The clinic reduced manual reminder work from roughly 3 hours per day to under 35 minutes. The operations lead gained a daily view of pending confirmations and exceptions.
+
+Acceptance Criteria Used:
+- Import appointment list with at least 98% row-level parsing accuracy.
+- Flag duplicate or incomplete patient records before message generation.
+- Generate reminder drafts for all appointments within the next 72 hours.
+- Produce a daily exception report by 9:00 AM local time.
+
+Known Limitations:
+- Patient consent rules had to be confirmed before sending automated messages.
+- Scheduling system exports were inconsistent across locations.
+- WhatsApp delivery failures required a manual fallback process.

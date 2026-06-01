@@ -1,0 +1,26 @@
+Case ID: CASE-002
+Client Type: B2B professional services firm
+Industry: Consulting
+Company Size: 18 employees
+
+Initial Situation:
+The client received leads from website forms, LinkedIn outreach, and partner referrals. Qualification happened manually in email threads, and the sales lead spent too much time summarizing prospects before discovery calls.
+
+Core Problem:
+The team needed a repeatable process to enrich incoming leads, classify urgency, identify likely fit, and prepare a concise call brief before a salesperson joined the conversation.
+
+Current Tools:
+- HubSpot
+- Google Sheets
+- LinkedIn
+- Gmail
+- Slack
+
+Solution Delivered:
+An AI-assisted lead qualification workflow combined form responses, CRM notes, and public company context. The system generated an internal call brief, suggested discovery questions, and assigned priority scores with reasoning.
+
+Architecture Notes:
+CrewAI was selected because the workflow benefited from separated roles: lead intake, enrichment, fit analysis, and sales brief drafting. Claude Sonnet was selected for reliable structured output and reasoning quality. Gemini Flash was considered for cost-sensitive enrichment but not used for the first pilot.
+
+Business Outcome:
+The sales lead reduced prep time from 25 minutes per prospect to about 6 minutes. The team also gained a more consistent qualification rubric.

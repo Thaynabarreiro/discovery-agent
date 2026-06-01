@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from crewai import Agent, Crew, Process, Task
 from crewai.agents.agent_builder.base_agent import BaseAgent
+from crewai.knowledge.source.text_file_knowledge_source import TextFileKnowledgeSource
 from crewai.project import CrewBase, agent, crew, task
 
 
@@ -46,9 +47,17 @@ class DiscoveryAgent:
 
     @crew
     def crew(self) -> Crew:
+        reference_cases = TextFileKnowledgeSource(
+            file_paths=[
+                "case_001_clinic_no_show_automation.txt",
+                "case_002_b2b_lead_qualification.txt",
+                "case_003_inventory_exception_triage.txt",
+            ]
+        )
         return Crew(
             agents=self.agents,
             tasks=self.tasks,
             process=Process.sequential,
+            knowledge_sources=[reference_cases],
             verbose=True,
         )

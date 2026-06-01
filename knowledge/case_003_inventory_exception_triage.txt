@@ -1,0 +1,26 @@
+Case ID: CASE-003
+Client Type: Specialty retail distributor
+Industry: Retail and wholesale operations
+Company Size: 65 employees
+
+Initial Situation:
+The client managed inventory exceptions across spreadsheets, supplier portals, and email. Stockouts were often discovered late, and operations managers spent hours reconciling conflicting information before escalating issues.
+
+Core Problem:
+The business needed a workflow that could detect inventory anomalies, summarize likely causes, and route exceptions to the right owner without requiring a full ERP replacement.
+
+Current Tools:
+- Excel
+- Shopify
+- Supplier CSV exports
+- Email
+- Slack
+
+Solution Delivered:
+A monitoring workflow ingested product and supplier files, identified stockout risk, matched exceptions against known patterns, and generated owner-specific action summaries.
+
+Architecture Notes:
+LangGraph was considered because exception handling can involve loops and conditional paths. For the first phase, CrewAI was chosen because the pilot scope was sequential and easier to validate: ingest, classify, summarize, escalate. A later phase could move to LangGraph if automated retries and conditional supplier workflows become central.
+
+Business Outcome:
+The operations team reduced weekly reconciliation from 9 hours to roughly 2 hours and caught priority stockout risks earlier.
