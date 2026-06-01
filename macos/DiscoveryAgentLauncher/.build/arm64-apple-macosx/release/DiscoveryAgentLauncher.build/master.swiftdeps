@@ -1,0 +1,7 @@
+version: "Apple Swift version 6.1.2 (swiftlang-6.1.2.1.2 clang-1700.0.13.5)"
+options: "8eb3291845e714cf6bbc3d1c4a5056871c7a925b4f9ad66475f3a306e3700990"
+build_start_time: [1780340308, 284526000]
+build_end_time: [1780340310, 874094000]
+inputs:
+  ? "/Users/thaynamartinsbarreiro/Documents/IA para PMEs \u2014 AI Agency/02_Prospecc\u0327a\u0303o/00_ Discovery Call/discovery-agent/macos/DiscoveryAgentLauncher/Sources/DiscoveryAgentLauncher.swift"
+  : [1780340301, 522058538]
