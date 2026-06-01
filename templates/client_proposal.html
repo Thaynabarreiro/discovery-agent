@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;700&family=Playfair+Display:wght@400&display=swap');
+    @page {{ size: A4; margin: 40px 48px; @bottom-right {{ content: counter(page); color: #A89F93; font: 9px "IBM Plex Mono"; }} }}
+    :root {{
+      --cream: #F5F0E8;
+      --cream-dark: #EDE8DF;
+      --cream-border: #D8D0C4;
+      --black: #1A1A1A;
+      --black-soft: #2C2C2C;
+      --red: #D13B2A;
+      --red-light: rgba(209, 59, 42, 0.08);
+      --muted: #7A7060;
+      --muted-light: #A89F93;
+    }}
+    * {{ box-sizing: border-box; }}
+    body {{
+      margin: 0;
+      background: var(--cream);
+      color: var(--black);
+      font-family: "IBM Plex Sans", sans-serif;
+      font-size: 11px;
+      line-height: 1.5;
+    }}
+    header {{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 42px;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 9px;
+      color: var(--muted);
+    }}
+    .logo {{
+      width: 80px;
+      height: 24px;
+      border: 1px solid var(--cream-border);
+    }}
+    .hero {{ margin-bottom: 34px; }}
+    .eyebrow {{
+      color: var(--red);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 9px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }}
+    h1 {{
+      font-family: "Playfair Display", serif;
+      font-size: 30px;
+      font-weight: 400;
+      margin: 0 0 6px;
+    }}
+    .subtitle {{
+      color: var(--muted);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 11px;
+    }}
+    section {{ margin-bottom: 22px; }}
+    .section-head {{
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid var(--cream-border);
+      padding-bottom: 6px;
+      margin-bottom: 10px;
+    }}
+    .num {{
+      color: var(--red);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 9px;
+    }}
+    h2 {{
+      color: var(--black-soft);
+      font-size: 10px;
+      font-weight: 700;
+      margin: 0;
+      text-transform: uppercase;
+    }}
+    p {{ margin: 0 0 8px; color: var(--black-soft); }}
+    .highlight {{
+      background: var(--red-light);
+      border-left: 2px solid var(--red);
+      padding: 10px 12px;
+      margin-top: 10px;
+      font-weight: 500;
+    }}
+    ul, ol {{ margin: 0; padding: 0; list-style: none; }}
+    .deliverables li {{
+      border-bottom: 1px solid var(--cream-border);
+      padding: 7px 0;
+    }}
+    .deliverables li::before {{
+      content: "✓";
+      color: var(--red);
+      margin-right: 8px;
+      font-weight: 700;
+    }}
+    .timeline li {{ padding: 3px 0; }}
+    .next-steps {{ counter-reset: step; }}
+    .next-steps li {{
+      counter-increment: step;
+      padding: 4px 0 4px 28px;
+      position: relative;
+    }}
+    .next-steps li::before {{
+      content: counter(step, decimal-leading-zero);
+      position: absolute;
+      left: 0;
+      color: var(--muted-light);
+      font-family: "IBM Plex Mono", monospace;
+    }}
+    .signature {{
+      margin-top: 24px;
+      background: var(--black);
+      color: #888;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 11px;
+    }}
+    .sig-line {{
+      width: 120px;
+      border-top: 1px solid #444;
+      padding-top: 6px;
+      text-align: right;
+    }}
+    footer {{
+      margin-top: 14px;
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted-light);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 9px;
+    }}
+    .dot {{
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--red);
+      margin-left: 4px;
+      animation: pulse 1s infinite;
+    }}
+    @keyframes pulse {{ 50% {{ opacity: .35; }} }}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo"></div>
+    <div>Prepared for {client_name}</div>
+    <div>{date}</div>
+  </header>
+
+  <main>
+    <div class="hero">
+      <div class="eyebrow">Scope of Work</div>
+      <h1>AI Solution Proposal</h1>
+      <div class="subtitle">Prepared for {client_name}</div>
+    </div>
+
+    <section>
+      <div class="section-head"><div class="num">01</div><h2>What We Discussed</h2></div>
+      {what_discussed}
+    </section>
+
+    <section>
+      <div class="section-head"><div class="num">02</div><h2>What We're Building</h2></div>
+      <p>{what_building}</p>
+      <div class="highlight">{highlight}</div>
+    </section>
+
+    <section>
+      <div class="section-head"><div class="num">03</div><h2>What We'll Deliver</h2></div>
+      <ul class="deliverables">{deliverables}</ul>
+    </section>
+
+    <section>
+      <div class="section-head"><div class="num">04</div><h2>Timeline</h2></div>
+      <ul class="timeline">{timeline}</ul>
+    </section>
+
+    <section>
+      <div class="section-head"><div class="num">05</div><h2>Next Steps</h2></div>
+      <ol class="next-steps">{next_steps}</ol>
+    </section>
+
+    <div class="signature">
+      <div>Prepared as a working scope for review and approval.</div>
+      <div class="sig-line">Client Signature</div>
+    </div>
+  </main>
+
+  <footer>
+    <div>Generated by Discovery Agent <span class="dot"></span></div>
+    <div></div>
+  </footer>
+</body>
+</html>

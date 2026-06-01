@@ -1,0 +1,12 @@
+crewai[tools]
+anthropic
+openai
+chromadb
+sentence-transformers
+sounddevice
+soundfile
+weasyprint
+rich
+pypdf
+python-dotenv
+gitpython

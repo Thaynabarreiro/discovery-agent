@@ -1,0 +1,38 @@
+[project]
+name = "discovery-agent"
+version = "0.1.0"
+description = "Discovery call agent using WAT architecture and CrewAI orchestration."
+authors = [{ name = "Zaigo", email = "hello@example.com" }]
+requires-python = ">=3.11,<3.13"
+dependencies = [
+  "crewai[tools]",
+  "anthropic",
+  "openai",
+  "chromadb",
+  "sentence-transformers",
+  "sounddevice",
+  "soundfile",
+  "weasyprint",
+  "rich",
+  "pypdf",
+  "python-dotenv",
+  "gitpython",
+]
+
+[project.scripts]
+discovery-agent = "discovery_agent.main:run"
+run_crew = "discovery_agent.main:run"
+train = "discovery_agent.main:train"
+replay = "discovery_agent.main:replay"
+test = "discovery_agent.main:test"
+run_with_trigger = "discovery_agent.main:run_with_trigger"
+
+[tool.crewai]
+type = "crew"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/discovery_agent"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

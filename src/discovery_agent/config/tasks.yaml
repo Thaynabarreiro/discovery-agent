@@ -1,0 +1,52 @@
+intake_task:
+  description: >
+    Analyze this discovery call transcript and extract the following JSON:
+    client_name, industry, core_problem, current_tools, integrations_needed,
+    data_volume, team_size, urgency, budget_signal, complexity.
+
+    Transcript:
+    {transcript}
+  expected_output: >
+    Valid JSON with the required intake fields. Use "TBD" for missing values.
+  agent: intake_parser
+
+architecture_task:
+  description: >
+    Based on the intake and transcript, choose and justify the solution architecture.
+    Evaluate CrewAI, LangGraph, Claude SDK, and Gemini SDK. Evaluate Claude Sonnet,
+    Claude Haiku, and Gemini Flash. Include vector database and infrastructure decisions.
+  expected_output: >
+    A framework and stack decision table with specific rationale for this client case.
+  agent: solution_architect
+  context:
+    - intake_task
+
+scope_task:
+  description: >
+    Estimate phases and acceptance criteria from the detected complexity.
+    Low complexity: 1-2 weeks. Medium: 2-4 weeks. High: 4-6 weeks.
+    Never exceed 8 weeks; split into phases when needed.
+  expected_output: >
+    Phases, measurable acceptance criteria, known limitations, watch points,
+    estimated API/infra cost, and environment variable names with owners.
+  agent: scope_estimator
+  context:
+    - intake_task
+    - architecture_task
+
+drafting_task:
+  description: >
+    Produce two deliverables in one structured response:
+    1. Client proposal content in plain executive English with no technical stack,
+       model names, APIs, or environment variables.
+    2. Engineering spec content in Markdown-ready structure with technical decisions,
+       agent architecture, data flow, phases, env vars, limitations, and open questions.
+
+    Current date: {current_date}
+  expected_output: >
+    A complete client proposal draft and a complete engineering spec draft.
+  agent: proposal_drafter
+  context:
+    - intake_task
+    - architecture_task
+    - scope_task

@@ -1,0 +1,9 @@
+.env
+.DS_Store
+.chromadb/
+output/
+__pycache__/
+*.pyc
+venv/
+.venv/
+/tmp/chunk_*.wav
