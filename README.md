@@ -65,6 +65,8 @@ ENABLE_GITHUB_UPLOAD=false
 
 For AMP deployment, keep `ENABLE_GITHUB_UPLOAD=false` unless the deployed runtime should push generated artifacts back to GitHub.
 
+`pyproject.toml` intentionally keeps only the lightweight CrewAI deployment dependencies. `requirements.txt` keeps the full local app stack for live audio, RAG, PDF generation, and GitHub upload.
+
 ## What You Need To Provide
 
 - `ANTHROPIC_API_KEY` for Claude generation.
