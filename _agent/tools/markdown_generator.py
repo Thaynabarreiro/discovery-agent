@@ -29,6 +29,11 @@ def generate_engineering_spec(payload: dict, output_dir: str = "output") -> Path
     )
     limitations = "\n".join(f"- {item}" for item in scope["known_limitations"] + scope["watch_points"])
     questions = "\n".join(f"- [ ] {question}" for question in spec["open_questions"])
+    agents = architecture.get("agent_architecture") or []
+    data_flow = architecture.get("data_flow") or []
+    diagram = _agent_diagram(agents)
+    responsibilities = _agent_responsibilities(agents)
+    flow = _data_flow(data_flow)
     crew_review = spec.get("crew_review")
     crew_section = ""
     if crew_review:
@@ -67,49 +72,18 @@ def generate_engineering_spec(payload: dict, output_dir: str = "output") -> Path
 ## Agent Architecture
 
 ```text
-Transcript -> IntakeParser -> SolutionArchitect -> ScopeEstimator -> ProposalDrafter
-                         |              |
-                         v              v
-                    Structured JSON   RAG Search
-                         |              |
-                         +------> Document Generators
+{diagram}
 ```
 
 ### Agent Responsibilities
 
-**IntakeParser**
-- Input: Raw transcript
-- Output: Structured JSON with client, problem, tools, integrations, urgency, and complexity
-- Tools: None
-- Notes: Keeps missing information as TBD instead of inventing facts
-
-**SolutionArchitect**
-- Input: Transcript and intake JSON
-- Output: Architecture summary, stack decisions, and similar case references
-- Tools: rag_search
-- Notes: Chooses orchestration and model based on case complexity
-
-**ScopeEstimator**
-- Input: Intake JSON and architecture decisions
-- Output: Phases, acceptance criteria, limitations, watch points, infra cost, env vars
-- Tools: None
-- Notes: Timelines never exceed 8 weeks; larger efforts are split into phases
-
-**ProposalDrafter**
-- Input: Intake, architecture, and scope payloads
-- Output: Client proposal content and engineering spec content
-- Tools: pdf_generator, markdown_generator
-- Notes: Client proposal omits technical stack and environment variables
+{responsibilities}
 
 ---
 
 ## Data Flow
 
-1. **Trigger** - Manual transcript input or live audio capture.
-2. **Extraction** - IntakeParser converts transcript text into structured JSON.
-3. **Retrieval** - RAG searches `knowledge_base/` with `n_results=3` using local ChromaDB embeddings.
-4. **Processing** - SolutionArchitect defines technical choices, ScopeEstimator converts complexity into phases, ProposalDrafter prepares final content.
-5. **Output** - PDF is written via WeasyPrint and Markdown is written directly to `output/`.
+{flow}
 
 ---
 
@@ -150,3 +124,45 @@ Transcript -> IntakeParser -> SolutionArchitect -> ScopeEstimator -> ProposalDra
 """
     path.write_text(content, encoding="utf-8")
     return path
+
+
+def _agent_diagram(agents: list[dict]) -> str:
+    if not agents:
+        return "Trigger -> IntakeAgent -> RetrievalAgent -> DecisionAgent -> ApprovalAgent -> Output"
+    names = [agent["name"] for agent in agents]
+    return " -> ".join(names)
+
+
+def _agent_responsibilities(agents: list[dict]) -> str:
+    if not agents:
+        agents = [
+            {
+                "name": "IntakeAgent",
+                "input": "Raw workflow input",
+                "output": "Structured case profile",
+                "tools": "Approved source-system connectors",
+                "notes": "Keeps unknown information as open questions",
+            }
+        ]
+    sections = []
+    for agent in agents:
+        sections.append(
+            f"""**{agent['name']}**
+- Input: {agent['input']}
+- Output: {agent['output']}
+- Tools: {agent['tools']}
+- Notes: {agent['notes']}"""
+        )
+    return "\n\n".join(sections)
+
+
+def _data_flow(flow: list[dict]) -> str:
+    if not flow:
+        flow = [
+            {"step": "Trigger", "description": "The workflow starts from a manual run, webhook, or approved source-system event."},
+            {"step": "Extraction", "description": "The intake agent converts raw inputs into structured data and open questions."},
+            {"step": "Retrieval", "description": "ChromaDB retrieves relevant records or reference cases using local embeddings."},
+            {"step": "Processing", "description": "Specialized agents reason over the case and prepare recommendations."},
+            {"step": "Output", "description": "Approved outputs are written back to the selected client systems."},
+        ]
+    return "\n".join(f"{index}. **{item['step']}** - {item['description']}" for index, item in enumerate(flow, start=1))

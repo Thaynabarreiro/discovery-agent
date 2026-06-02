@@ -14,6 +14,10 @@ def generate_pm_call_review(payload: dict, output_dir: str = "output") -> Path:
     architecture = spec["architecture"]
     scope = spec["scope"]
     decisions = {item["layer"]: item["chosen"] for item in architecture["decisions"]}
+    if intake.get("use_case") == "lead_qualification":
+        content = _lead_qualification_review(intake, architecture, scope, decisions)
+        path.write_text(content, encoding="utf-8")
+        return path
 
     content = f"""# PM Call Review - {intake.get('client_name', 'Client')}
 
@@ -64,3 +68,54 @@ On this discovery call with {intake.get('client_name', 'the client')}, the PM sh
 
     path.write_text(content, encoding="utf-8")
     return path
+
+
+def _lead_qualification_review(intake: dict, architecture: dict, scope: dict, decisions: dict) -> str:
+    client = intake.get("client_name", "Client")
+    return f"""# PM Call Review - {client}
+
+## One-Paragraph PM Read
+
+On this discovery call, {client} is asking for an explainable inbound lead qualification system: new leads arrive from website forms, Gmail, LinkedIn, and trade show lists; the workflow enriches the company context, checks Salesforce history for similar won/lost accounts, scores the lead, explains why it received that priority, and recommends the right sales rep. This is a RAG plus agentic workflow problem: RAG retrieves comparable Salesforce opportunities and sales notes, ChromaDB is the pilot vector database, and {decisions.get('Orchestration', 'CrewAI')} coordinates specialized agents for intake, enrichment, retrieval, scoring, routing, and approval drafting. The PM should position the pilot around one measurable business outcome: high-priority leads move from two or three days of delay to routing within one hour, while Salesforce updates remain draft-only until a human approves them. The hard parts are Salesforce data quality, scoring calibration, source citations, rep routing rules, and LinkedIn/Gmail permissions; the easier parts are normalizing lead inputs, producing the first score explanation, creating Slack visibility, and generating draft CRM updates. Scope should stay at {scope.get('timeline_summary', '2-3 weeks')} for the pilot because Atlas has an upcoming campaign and needs trust before automation.
+
+## What The PM Should Be Able To Say Live
+
+> This is a lead qualification and routing workflow with retrieval over CRM history. We would use agents to separate the jobs: one agent normalizes the incoming lead, another enriches the company context, another retrieves similar Salesforce accounts, another scores the lead with an explanation, and another recommends the sales rep and prepares a draft CRM update. The first version should keep a human approval step so the team trusts the recommendation before anything is written back.
+
+## Working Solution Sketch
+
+| Layer | PM-Level Explanation | Proposed Choice |
+|---|---|---|
+| Trigger | How the process starts | New inbound lead or manual pilot upload |
+| Source systems | Where lead and account context comes from | Salesforce, Gmail, LinkedIn Sales Navigator, Slack, spreadsheet/list imports |
+| Agentic framework | How reasoning is organized | {decisions.get('Orchestration', 'CrewAI')} |
+| Retrieval | How similar historical cases are found | RAG over Salesforce opportunities and sales notes |
+| Vector database | Where embeddings are searched | {decisions.get('Vector DB', 'ChromaDB')} |
+| LLM | What generates explanations and recommendations | {decisions.get('LLM', 'Claude Sonnet 4.6')} |
+| Human approval | What prevents unsafe automation | Draft Salesforce update before write-back |
+| Outputs | What users receive | Lead score, explanation, recommended sales rep, Slack summary, CRM draft |
+
+## Hard vs Easy
+
+**Hard**
+- Cleaning Salesforce won/lost history enough for reliable similarity matching.
+- Defining score thresholds that the coordinator, sales manager, and reps all trust.
+- Showing source citations so the AI does not feel like a black-box score.
+- Handling rep routing conflicts across territory, product category, and existing account ownership.
+- Managing Gmail and LinkedIn permissions without over-expanding the pilot.
+
+**Easier**
+- Running the first pilot from pasted or exported lead samples.
+- Normalizing lead messages and extracting urgency/equipment mentions.
+- Producing a first score explanation from a deterministic rubric.
+- Creating Slack summaries for manager visibility.
+- Keeping Salesforce updates as drafts until approved.
+
+## PM Follow-Up Questions
+
+- [ ] Which Salesforce objects and fields contain the best opportunity, account, invoice, and sales-note history?
+- [ ] What scoring thresholds define high, medium, and low priority?
+- [ ] Which reps can receive routed leads, and what rules decide ownership?
+- [ ] Which enrichment sources are approved for the pilot?
+- [ ] Who approves the draft Salesforce update before it is written back?
+"""

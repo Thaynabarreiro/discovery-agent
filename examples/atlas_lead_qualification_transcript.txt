@@ -1,0 +1,53 @@
+Client wants an AI system that scores inbound leads, summarizes context, and routes high-priority opportunities to the right sales rep.
+
+Thayná: Thanks for taking the time today. Could you start by explaining what you want to improve in your sales process?
+
+Client: We are Atlas Industrial Supply. We sell equipment and replacement parts to manufacturing companies. Our sales team receives leads from website forms, email, LinkedIn, and trade show lists, but qualification is very manual.
+
+Thayná: What happens when a new lead comes in?
+
+Client: A sales coordinator looks at the company name, checks the website, reviews CRM history, reads the message, and tries to decide if the lead is worth sending to a sales rep. Sometimes they also check LinkedIn or past invoices.
+
+Thayná: What tools are you using?
+
+Client: Salesforce, Gmail, LinkedIn Sales Navigator, Slack, and a spreadsheet where the coordinator tracks lead status.
+
+Thayná: What is not working well today?
+
+Client: We are too slow. Some good leads wait two or three days before someone follows up. Also, the qualification quality depends on who is reviewing the lead. One person may mark it as high priority, another may ignore it.
+
+Thayná: What makes a lead high priority for your team?
+
+Client: Company size, industry, location, urgency in the message, whether they mention specific equipment, and whether we have sold to a similar company before.
+
+Thayná: Do you have historical data on past opportunities?
+
+Client: Yes, Salesforce has several years of closed won and closed lost opportunities. It is not perfectly clean, but there is useful information. We also have notes from sales reps.
+
+Thayná: What would the AI workflow do in the first version?
+
+Client: Ideally, it would read new inbound leads, enrich the company context, compare the lead to similar past accounts, give a lead score, explain the reason for the score, and recommend the right sales rep.
+
+Thayná: Should it update Salesforce automatically?
+
+Client: For the first pilot, it can create a draft update or a recommendation. We would prefer a human to approve changes before anything is written back.
+
+Thayná: Who would use this?
+
+Client: The sales coordinator, the sales manager, and about eight sales reps. The coordinator needs triage. The manager wants visibility into missed opportunities.
+
+Thayná: What would success look like?
+
+Client: Faster response time and better prioritization. If high-priority leads can be routed within one hour instead of one or two days, that would be a big win.
+
+Thayná: What timeline are you considering?
+
+Client: Two to three weeks for a pilot. We have a campaign launching soon, so we want to test before that.
+
+Thayná: Any concerns?
+
+Client: We do not want the AI making up information. If it uses company context or similar accounts, we need to see where that information came from.
+
+Thayná: That makes sense. This sounds like a lead qualification workflow with retrieval from CRM history, structured scoring, and human approval before CRM updates.
+
+Client: Yes, exactly. We want the team to trust the recommendation, not just see a black-box score.
