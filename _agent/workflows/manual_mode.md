@@ -17,8 +17,10 @@ Process a pasted transcript or transcript file and generate the client proposal 
 4. Run `ScopeEstimator` to define phases, acceptance criteria, limitations, and environment variables.
 5. Run `ProposalDrafter` to produce client-facing and engineering-facing content.
 6. Generate:
-   - `output/client_proposal_YYYY-MM-DD_HH-MM.pdf`
-   - `output/engineering_spec_YYYY-MM-DD_HH-MM.md`
+   - `output/YYYY-MM-DD_client-name/client_proposal.pdf`
+   - `output/YYYY-MM-DD_client-name/engineering_spec.md`
+   - `output/YYYY-MM-DD_client-name/pm_call_review.md`
+   - `output/YYYY-MM-DD_client-name/transcript.txt`
 7. Attempt GitHub upload if git and GitHub CLI are configured.
 
 ## Ambiguous or Incomplete Text

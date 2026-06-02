@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import re
 from datetime import datetime
+from pathlib import Path
 
 
 def extract_discovery_date(transcript: str) -> str:
@@ -24,3 +25,7 @@ def slugify(value: str) -> str:
 
 def artifact_prefix(client_name: str, discovery_date: str) -> str:
     return f"{discovery_date}_{slugify(client_name)}"
+
+
+def artifact_output_dir(client_name: str, discovery_date: str, base_dir: str = "output") -> Path:
+    return Path(base_dir) / artifact_prefix(client_name, discovery_date)

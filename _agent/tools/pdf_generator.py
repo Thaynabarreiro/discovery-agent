@@ -21,8 +21,8 @@ def generate_client_proposal(payload: dict, output_dir: str = "output") -> Path:
         next_steps="".join(f"<li>{escape(item)}</li>" for item in proposal["next_steps"]),
     )
 
-    html_path = out_dir / f"{metadata['artifact_prefix']}_client_proposal.html"
-    pdf_path = out_dir / f"{metadata['artifact_prefix']}_client_proposal.pdf"
+    html_path = out_dir / "client_proposal.html"
+    pdf_path = out_dir / "client_proposal.pdf"
     html_path.write_text(html, encoding="utf-8")
 
     try:

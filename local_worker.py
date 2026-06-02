@@ -132,11 +132,15 @@ def session_status(session_id: str) -> dict:
 
 
 def _serialize_result(result: dict, transcript: str) -> dict:
-    transcript_path = Path("output") / "latest_transcript.txt"
+    output_dir = Path(result["payload"]["metadata"]["output_dir"])
+    transcript_path = output_dir / "transcript.txt"
     transcript_path.parent.mkdir(exist_ok=True)
     transcript_path.write_text(transcript, encoding="utf-8")
+    latest_transcript_path = Path("output") / "latest_transcript.txt"
+    latest_transcript_path.write_text(transcript, encoding="utf-8")
     return {
         "status": "complete",
+        "output_dir": str(output_dir),
         "transcript_path": str(transcript_path),
         "client_proposal": str(result["pdf_path"]),
         "engineering_spec": str(result["md_path"]),

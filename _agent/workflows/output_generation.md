@@ -2,7 +2,7 @@
 
 ## Objective
 
-Generate a client-safe proposal PDF and an engineering-ready Markdown spec from the final agent outputs.
+Generate a client-safe proposal PDF, an engineering-ready Markdown spec, and a PM call review from the final agent outputs.
 
 ## Client Proposal Rules
 
@@ -24,15 +24,22 @@ Generate a client-safe proposal PDF and an engineering-ready Markdown spec from 
 ## PDF Generation
 
 1. Render the HTML template with proposal content.
-2. Write a temporary HTML file under `output/`.
-3. Convert it to PDF with WeasyPrint.
-4. If WeasyPrint fails, save the HTML fallback and print a clear terminal warning.
+2. Create a discovery folder under `output/YYYY-MM-DD_client-name/`.
+3. Write `client_proposal.html` inside the discovery folder.
+4. Convert it to `client_proposal.pdf` with WeasyPrint.
+5. If WeasyPrint fails, save the HTML fallback and print a clear terminal warning.
 
 ## Markdown Generation
 
 1. Build Markdown from the structured engineering payload.
-2. Save to `output/engineering_spec_YYYY-MM-DD_HH-MM.md`.
+2. Save to `output/YYYY-MM-DD_client-name/engineering_spec.md`.
 3. Keep all content editable and GitHub/Notion friendly.
+
+## PM Review Generation
+
+1. Build the internal PM review from intake, architecture, and scope payloads.
+2. Save to `output/YYYY-MM-DD_client-name/pm_call_review.md`.
+3. Save the raw transcript to `output/YYYY-MM-DD_client-name/transcript.txt`.
 
 ## GitHub Upload
 

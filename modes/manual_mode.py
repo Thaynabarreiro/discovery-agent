@@ -14,7 +14,7 @@ from _agent.agents.scope_estimator import ScopeEstimator
 from _agent.agents.solution_architect import SolutionArchitect
 from _agent.tools.github_uploader import upload_to_github
 from _agent.tools.markdown_generator import generate_engineering_spec
-from _agent.tools.output_naming import artifact_prefix, extract_discovery_date
+from _agent.tools.output_naming import artifact_output_dir, artifact_prefix, extract_discovery_date
 from _agent.tools.pm_review_generator import generate_pm_call_review
 from _agent.tools.pdf_generator import generate_client_proposal
 
@@ -57,16 +57,19 @@ def run_pipeline(transcript: str, push_to_github: bool = True) -> dict:
         progress.add_task("ProposalDrafter working...", total=None)
         payload = ProposalDrafter().run(intake, architecture, scope)
         discovery_date = extract_discovery_date(transcript)
+        client_name = intake.get("client_name", "Client")
         payload["metadata"] = {
             "discovery_date": discovery_date,
-            "artifact_prefix": artifact_prefix(intake.get("client_name", "Client"), discovery_date),
+            "artifact_prefix": artifact_prefix(client_name, discovery_date),
+            "output_dir": str(artifact_output_dir(client_name, discovery_date)),
         }
         if crew_review:
             payload["engineering_spec"]["crew_review"] = crew_review
 
-    pdf_path = generate_client_proposal(payload)
-    md_path = generate_engineering_spec(payload)
-    pm_review_path = generate_pm_call_review(payload)
+    output_dir = payload["metadata"]["output_dir"]
+    pdf_path = generate_client_proposal(payload, output_dir=output_dir)
+    md_path = generate_engineering_spec(payload, output_dir=output_dir)
+    pm_review_path = generate_pm_call_review(payload, output_dir=output_dir)
     repo_url = None
     if push_to_github and os.getenv("ENABLE_GITHUB_UPLOAD", "true").lower() == "true":
         try:

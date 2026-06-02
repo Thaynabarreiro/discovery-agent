@@ -7,9 +7,7 @@ def generate_pm_call_review(payload: dict, output_dir: str = "output") -> Path:
     out_dir = Path(output_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    metadata = payload["metadata"]
-    prefix = metadata["artifact_prefix"]
-    path = out_dir / f"{prefix}_pm_call_review.md"
+    path = out_dir / "pm_call_review.md"
 
     spec = payload["engineering_spec"]
     intake = spec["intake"]

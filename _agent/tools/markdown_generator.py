@@ -7,7 +7,7 @@ def generate_engineering_spec(payload: dict, output_dir: str = "output") -> Path
     out_dir = Path(output_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
     metadata = payload["metadata"]
-    path = out_dir / f"{metadata['artifact_prefix']}_engineering_spec.md"
+    path = out_dir / "engineering_spec.md"
 
     spec = payload["engineering_spec"]
     intake = spec["intake"]
